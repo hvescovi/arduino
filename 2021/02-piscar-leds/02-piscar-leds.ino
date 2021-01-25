@@ -2,7 +2,7 @@ void setup() { // código executado somente uma vez
 
 
   // configurar pinos de saída (leds)
-  for (int i = 2; i <= 13; i++) {
+  for (int i = 4; i <= 13; i++) { // 10 leds
     pinMode(i, OUTPUT);
   }
   
