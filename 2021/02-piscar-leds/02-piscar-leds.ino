@@ -11,14 +11,14 @@ void setup() { // código executado somente uma vez
 void loop() { // código executado repetidamente
 
   // acender os leds
-  for (int i = 2; i <= 13; i++) {
+  for (int i = 4; i <= 13; i++) {
     digitalWrite(i, HIGH);
   }
   
   delay(1000); // esperar 1 segundo
   
   // apagar os leds
-  for (int i = 2; i <= 13; i++) {
+  for (int i = 4; i <= 13; i++) {
     digitalWrite(i, LOW);
   }
 
