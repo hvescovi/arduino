@@ -1,43 +1,40 @@
-// https://www.tutorialspoint.com/arduino/arduino_ultrasonic_sensor.htm
-
 int pingPin = 2; // mapeamento do pino trigger
 int echoPin = 3;  // mapeamento do pino echo
 
 float duration; // tamanho da onda
-float distance; // distancia percorrida
+float inches; // polegadas
+float cm; // centímetros
 
-// valor escolhido observando variação no sensor de distãncia
-// EM CENTÍMETROS
+// valor escolhido observando variação no sensor de distância em centímetros
 int maxDist = 20; 
 
 // são 10 leds a acender
-// divide um intervalo de máximo de polegadas em 10 partes
-// *** em centímetros ***
+// divide um intervalo de máximo de polegadas em 10 partes, em centímetros
 int   salto = maxDist / 10;
 
-// valor a ser lido do potenciometro
+// valor a ser lido do potenciômetro
 int potenciometro = 0;
 
 void setup() { // código executado somente uma vez
-  // inicialização do canal serial de informação/comunicação
+  // inicialização do canal serial de comunicação
   Serial.begin(9600);
 
   // configurar pinos de saída (leds)
   for (int i = 4; i <= 13; i++) { // 10 leds
     pinMode(i, OUTPUT);
   }
-
+  
+  // configurar pinos do sensor de distância
+  pinMode(pingPin, OUTPUT); // pino trigger (envia onda)
+  pinMode(echoPin, INPUT); // pino echo (recebe informação)
 }
-
 
 long microsecondsToInches(long microseconds) {
    return microseconds / 74 / 2;
 }
-
 long microsecondsToCentimeters(long microseconds) {
    return microseconds / 29 / 2;
 }
-
 
 // aciona os leds até o n-ésimo led
 void acionar_leds(int n) {
@@ -46,12 +43,10 @@ void acionar_leds(int n) {
   for (int i = 4; i <= 13; i++) {
     digitalWrite(i, LOW);
   }
-
   // acende os leds até o desejado
   for (int i = 4; i <= 4+n-1; i++) {
     digitalWrite(i, HIGH);
   }
-
 }
 
 void algoritmo1(int cm) {
@@ -62,8 +57,7 @@ void algoritmo1(int cm) {
    }
 }
 
-void algoritmo2(int cm) {
-  
+void algoritmo2(int cm) {  
    // verifica distância proporcional ao máximo
    if (cm >= salto * 10) {  // > 20?
       acionar_leds(10);
@@ -88,39 +82,39 @@ void algoritmo2(int cm) {
    } else {
       acionar_leds(0); // não acende nenhum led
    } 
-
 }
-
-
-
 
 void loop() { // código executado repetidamente
 
-   long duration, inches, cm;
-   pinMode(pingPin, OUTPUT);
+   // emissão de sinais do sensor de distância
    digitalWrite(pingPin, LOW);
    delayMicroseconds(2);
    digitalWrite(pingPin, HIGH);
    delayMicroseconds(10);
    digitalWrite(pingPin, LOW);
-   pinMode(echoPin, INPUT);
    duration = pulseIn(echoPin, HIGH);
+   // cálculos de distância
    inches = microsecondsToInches(duration);
    cm = microsecondsToCentimeters(duration);
+   // exibição de informações
    Serial.print(inches);
    Serial.print("in, ");
    Serial.print(cm);
    Serial.print("cm");
    Serial.println();
+ 
    delay(100);
 
-   // fazer a leitura do valor do potenciômetro
-   potenciometro = analogRead(A0); // é lido um valor de 0 a 1023
+   // leitura do valor do potenciômetro
+   // é lido um valor de 0 a 1023
+   potenciometro = analogRead(A0); 
 
-   if (potenciometro <= 511) { // aprox o meio do potenciômetro
+   // verificação da lógica
+   // considera-se aproximadamente o meio do potenciômetro
+   if (potenciometro <= 511) { 
       algoritmo1(cm);
    } else {
       algoritmo2(cm);
    }
-
 }
+// https://www.tutorialspoint.com/arduino/arduino_ultrasonic_sensor.htm
