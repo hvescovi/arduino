@@ -10,7 +10,7 @@ int maxDist = 20;
 
 // são 10 leds a acender
 // divide um intervalo de máximo de polegadas em 10 partes, em centímetros
-int   salto = maxDist / 10;
+int salto = maxDist / 10;
 
 // valor a ser lido do potenciômetro
 int potenciometro = 0;
@@ -38,7 +38,6 @@ long microsecondsToCentimeters(long microseconds) {
 
 // aciona os leds até o n-ésimo led
 void acionar_leds(int n) {
-
   // apaga todos os leds
   for (int i = 4; i <= 13; i++) {
     digitalWrite(i, LOW);
@@ -85,7 +84,6 @@ void algoritmo2(int cm) {
 }
 
 void loop() { // código executado repetidamente
-
    // emissão de sinais do sensor de distância
    digitalWrite(pingPin, LOW);
    delayMicroseconds(2);
