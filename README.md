@@ -1,3 +1,5 @@
 # arduino
 Repositório de códigos do arduíno
-Exemplo para demonstrar uso do github
+
+# piscaledistancia - desenvolvido em projeto de extensão, em 2020
+https://youtu.be/yipgbLpzbc0
