@@ -1,0 +1,69 @@
+#define pinA  2
+#define pinB  3
+#define pinC  4
+#define pinD  5
+#define pinE  6
+#define pinG  7
+#define pinF  8
+
+#define BTN   10
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(pinA, OUTPUT);
+  pinMode(pinB, OUTPUT);
+  pinMode(pinC, OUTPUT);
+  pinMode(pinD, OUTPUT);
+  pinMode(pinE, OUTPUT);
+  pinMode(pinF, OUTPUT);
+  pinMode(pinG, OUTPUT);
+
+  pinMode(BTN, INPUT);
+}
+
+int var = 0;
+
+void loop() {
+  if (digitalRead(BTN) == 1){
+    if (var == 2){
+      var = 0;
+    }
+    else{
+      var = var + 1;    
+    }
+    delay(1000);
+    //while(digitalRead(BTN) == 1);
+  }
+
+  if(var == 0){
+    digitalWrite(pinA, HIGH);
+    digitalWrite(pinB, HIGH);
+    digitalWrite(pinC, HIGH);
+    digitalWrite(pinD, HIGH);
+    digitalWrite(pinE, HIGH);
+    digitalWrite(pinF, HIGH);
+    digitalWrite(pinG, LOW);
+  }
+  else if( var == 1){
+    digitalWrite(pinA, LOW);
+    digitalWrite(pinB, HIGH);
+    digitalWrite(pinC, HIGH);
+    digitalWrite(pinD, LOW);
+    digitalWrite(pinE, LOW);
+    digitalWrite(pinF, LOW);
+    digitalWrite(pinG, LOW);
+  }
+  else if(var == 2){
+    digitalWrite(pinA, HIGH);
+    digitalWrite(pinB, HIGH);
+    digitalWrite(pinC, LOW);
+    digitalWrite(pinD, HIGH);
+    digitalWrite(pinE, HIGH);
+    digitalWrite(pinF, LOW);
+    digitalWrite(pinG, HIGH);
+  }
+
+}
+
+
+https://capsistema.com.br/index.php/2020/05/21/como-configurar-displays-de-7-segmentos-no-arduino/
