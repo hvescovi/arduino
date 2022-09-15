@@ -1,0 +1,11 @@
+LISTA de materiais para aula 03 - portas lógicas - arduino
+
+1 protoboard com display de 7 segmentos instalado
+1 protoboard com 2 botões instalados
+2 leds verdes, 2 leds vermelhos, 2 leds amarelos
+
+7 resistências de 330 (para 6 leds e display)
+2 resistências de 1k (para os 2 botões)
+
+
+
