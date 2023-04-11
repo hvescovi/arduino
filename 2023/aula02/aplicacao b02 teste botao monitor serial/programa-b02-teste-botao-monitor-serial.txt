@@ -1,0 +1,21 @@
+void setup()
+{
+  // configura porta digital 05 para entrada
+  // essa porta vai receber sinal do botão
+  pinMode(5, INPUT);
+  // inicializa a porta serial
+  Serial.begin(9600);  
+}
+
+void loop()
+{
+  // lê um valor na porta digital 5
+  // armazena o valor na variável x
+  int x = digitalRead(5);
+  // mostra o valor de x
+  Serial.print(x);
+  // mostra um espaço em branco
+  Serial.print(" ");
+  // espera um pouco (1 segundo)
+  delay(1000);
+}

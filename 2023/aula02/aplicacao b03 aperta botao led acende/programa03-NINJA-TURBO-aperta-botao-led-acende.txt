@@ -1,0 +1,25 @@
+void setup()
+{
+  pinMode(5, INPUT);
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);  
+}
+
+int x;
+
+void loop()
+{
+  x = digitalRead(5);
+  Serial.print(x);
+  Serial.println(", ");
+  // o botão está apertado?
+  if (x == 1) {
+    // acende o led :-)
+    digitalWrite(13, HIGH);
+    // trava aqui enquanto o botão estiver apertado
+    while (digitalRead(5) == 1);
+  } else {
+    // botão desligado: apaga o led
+    digitalWrite(13, LOW);
+  }
+}

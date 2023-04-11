@@ -1,0 +1,28 @@
+void setup()
+{
+  pinMode(5, INPUT);
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);  
+}
+
+//  variável declarada fora do loop
+// para ser utilizada no loop
+// é a mesma variável em todas as repetições
+// por isso está declarada fora do loop
+int x;
+
+void loop()
+{
+  x = digitalRead(5);
+  Serial.print(x);
+  Serial.println(", ");
+  // o botão está apertado?
+  if (x == 1) {
+    // acende o led :-)
+    digitalWrite(13, HIGH);
+  } else {
+    // botão desligado: apaga o led
+    digitalWrite(13, LOW);
+  }
+  delay(100);
+}

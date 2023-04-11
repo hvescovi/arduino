@@ -1,0 +1,70 @@
+void setup()
+{
+  pinMode(5, INPUT);
+  pinMode(13, OUTPUT);
+  Serial.begin(9600);  
+}
+
+int x;
+bool piscando = false; // led está piscando?
+bool apertou = false; // o botão foi apertado?
+
+void faz_leitura_botao() {
+  // PARTE 1
+  // FAZ A LEITURA DO BOTÃO
+  x = digitalRead(5);
+  Serial.print(x);
+  Serial.println(", ");
+}
+
+void verifica_informacoes_botao() {
+  // PARTE 2
+  // VERIFICA INFORMAÇÕES DE CONTROLE DO BOTÃO
+  
+  // o botão foi apertado?
+  if (x == 1) {
+    // sinaliza que apertou
+    apertou = true;
+  } else {
+    // o botão está solto
+    // mas ele havia sido apertado antes?
+    if (apertou) {
+      // então agora o botão foi LIBERADO
+      // inverte a piscagem
+      piscando = not piscando;
+      // sinaliza que agora o botão foi solto
+      apertou = false;
+    }
+  }
+}
+
+// PARTE 3
+// VERIFICA SE PRECISA ALTERAR PISCAGEM DO LED
+// esta parte ficou divida em 2 funções a seguir...
+
+void verifica_acende_led() {
+  // o led está piscando?
+  if (piscando == 1) {
+    // acende o led :-)
+    digitalWrite(13, HIGH);
+  }
+}
+
+void verifica_apaga_led() {
+  // o led deveria estar piscando?
+  if (piscando == 1) {
+    // apaga o led
+    digitalWrite(13, LOW);
+  }    
+}
+
+void loop()
+{
+  faz_leitura_botao();
+  verifica_informacoes_botao();
+  verifica_acende_led();
+  delay(300);
+  verifica_informacoes_botao();
+  verifica_apaga_led();  
+  delay(300);
+}
