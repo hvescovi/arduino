@@ -1,7 +1,10 @@
+#define pino_led 13
+#define pino_botao 5
+
 void setup()
 {
-  pinMode(5, INPUT);
-  pinMode(13, OUTPUT);
+  pinMode(pino_botao, INPUT);
+  pinMode(pino_led, OUTPUT);
   Serial.begin(9600);  
 }
 
@@ -11,7 +14,7 @@ bool apertou = false; // o botão foi apertado?
 
 void faz_leitura_botao() {
   // lê o sinal digital da porta 5
-  x = digitalRead(5);
+  x = digitalRead(pino_botao);
   // mostra o valor lido
   Serial.print(x);
   Serial.println(", ");
@@ -32,11 +35,11 @@ void verifica_informacoes_botao() {
 
 void pisca_led_se_precisar() {
   if (piscando == 1) { // led piscando?
-    digitalWrite(13, HIGH); // acende!
+    digitalWrite(pino_led, HIGH); // acende!
   }
   delay(300); // espera pra ver o led aceso
   if (piscando == 1) { // led piscando?
-    digitalWrite(13, LOW); // apaga!
+    digitalWrite(pino_led, LOW); // apaga!
   } 
   delay(300); // deixa o led um pouco apagado
 }
