@@ -8,9 +8,9 @@ void setup()
 int x;
 // variável para controlar o estado da piscagem
 // inicialmente, o led não pisca
-bool piscando = false;
+bool piscando = true;
 
-// variável para sinalizar se apertou botão ou não
+// variável para sinalizar se apertou o botão ou não
 // inicialmente o botão não está apertado
 bool apertou = false;
 
@@ -27,16 +27,30 @@ void loop()
   
   // o botão foi apertado?
   if (x == 1) {
-    // sinaliza que apertou
-    apertou = true;
-  } else {
-    // o botão está solto
-    // mas ele havia sido apertado antes?
-    if (apertou) {
-      // então agora o botão foi LIBERADO
+    // é a primeira vez que faz a leitura do botão apertado?
+    if (apertou == false) {
       // inverte a piscagem
       piscando = not piscando;
-      // sinaliza que agora o botão foi solto
+      // sinaliza que o botão já foi apertado
+      // na sequência, agora é só esperar o botão liberar
+      // ou seja, quando continuar apertado, 
+      // não precis fazer mais nada, pois o que precisava ser
+      // feito quando o botão foi apertado já foi feito,
+      // e eu quero fazer apenas uma vez :-)
+      apertou = true;
+    }
+  } else {
+    // se entrou aqui, é porque o botão não está apertado
+    // (x == 0)
+    
+    // mas...
+    // o botão estava apertado antes?
+    // está vindo de uma transição de 
+    // "botão apertado" para "botão solto"?
+    if (apertou) {
+      // então agora o botão foi SOLTO :-)
+      // ajusta a variável interna de controle
+      // para refletir essa nova situação
       apertou = false;
     }
   }
@@ -49,12 +63,14 @@ void loop()
     // acende o led :-)
     digitalWrite(13, HIGH);
   }
+  // espera um pouco para ver o led aceso
   delay(300);
-  // o led deveria estar piscando?
+  // o led está piscando?
   if (piscando == 1) {
     // apaga o led
     digitalWrite(13, LOW);
   }    
+  // espera um pouco para o led ficar apagado
   delay(300);
   
 }

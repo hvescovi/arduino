@@ -10,61 +10,40 @@ bool piscando = false; // led está piscando?
 bool apertou = false; // o botão foi apertado?
 
 void faz_leitura_botao() {
-  // PARTE 1
-  // FAZ A LEITURA DO BOTÃO
+  // lê o sinal digital da porta 5
   x = digitalRead(5);
+  // mostra o valor lido
   Serial.print(x);
   Serial.println(", ");
 }
 
 void verifica_informacoes_botao() {
-  // PARTE 2
-  // VERIFICA INFORMAÇÕES DE CONTROLE DO BOTÃO
-  
-  // o botão foi apertado?
-  if (x == 1) {
-    // sinaliza que apertou
-    apertou = true;
-  } else {
-    // o botão está solto
-    // mas ele havia sido apertado antes?
-    if (apertou) {
-      // então agora o botão foi LIBERADO
-      // inverte a piscagem
-      piscando = not piscando;
-      // sinaliza que agora o botão foi solto
-      apertou = false;
+  if (x == 1) { // o botão foi apertado?
+    if (apertou == false) { // não estava apertado antes?
+      piscando = not piscando; // inverte a piscagem
+      apertou = true; // sinaliza que apertou :-)
+    }
+  } else { // o botão está solto, vamos analisar...
+    if (apertou) { // botão estava apertado antes?
+      apertou = false; // botão foi liberado, vamos sinalizar
     }
   }
 }
 
-// PARTE 3
-// VERIFICA SE PRECISA ALTERAR PISCAGEM DO LED
-// esta parte ficou divida em 2 funções a seguir...
-
-void verifica_acende_led() {
-  // o led está piscando?
-  if (piscando == 1) {
-    // acende o led :-)
-    digitalWrite(13, HIGH);
+void pisca_led_se_precisar() {
+  if (piscando == 1) { // led piscando?
+    digitalWrite(13, HIGH); // acende!
   }
-}
-
-void verifica_apaga_led() {
-  // o led deveria estar piscando?
-  if (piscando == 1) {
-    // apaga o led
-    digitalWrite(13, LOW);
-  }    
+  delay(300); // espera pra ver o led aceso
+  if (piscando == 1) { // led piscando?
+    digitalWrite(13, LOW); // apaga!
+  } 
+  delay(300); // deixa o led um pouco apagado
 }
 
 void loop()
 {
   faz_leitura_botao();
   verifica_informacoes_botao();
-  verifica_acende_led();
-  delay(300);
-  verifica_informacoes_botao();
-  verifica_apaga_led();  
-  delay(300);
+  pisca_led_se_precisar();
 }
