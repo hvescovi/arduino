@@ -8,7 +8,7 @@ void setup()
 int x;
 // variável para controlar o estado da piscagem
 // inicialmente, o led não pisca
-bool piscando = true;
+bool piscando = false;
 
 // variável para sinalizar se apertou o botão ou não
 // inicialmente o botão não está apertado

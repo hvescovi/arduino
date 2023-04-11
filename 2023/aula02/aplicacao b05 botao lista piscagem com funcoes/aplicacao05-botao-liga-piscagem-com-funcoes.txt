@@ -12,6 +12,8 @@ int x;
 bool piscando = false; // led está piscando?
 bool apertou = false; // o botão foi apertado?
 
+
+
 void faz_leitura_botao() {
   // lê o sinal digital da porta 5
   x = digitalRead(pino_botao);
@@ -19,6 +21,10 @@ void faz_leitura_botao() {
   Serial.print(x);
   Serial.println(", ");
 }
+
+
+
+
 
 void verifica_informacoes_botao() {
   if (x == 1) { // o botão foi apertado?
@@ -33,8 +39,14 @@ void verifica_informacoes_botao() {
   }
 }
 
+
+
+
+
+
+
 void pisca_led_se_precisar() {
-  if (piscando == 1) { // led piscando?
+  if (piscando) { // led piscando?
     digitalWrite(pino_led, HIGH); // acende!
   }
   delay(300); // espera pra ver o led aceso
@@ -43,6 +55,19 @@ void pisca_led_se_precisar() {
   } 
   delay(300); // deixa o led um pouco apagado
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void loop()
 {
