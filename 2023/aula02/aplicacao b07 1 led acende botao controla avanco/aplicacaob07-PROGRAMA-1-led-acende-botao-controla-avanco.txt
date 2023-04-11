@@ -1,0 +1,74 @@
+#define LED1 5
+#define LED2 4
+#define LED3 3
+#define BOTAO 10
+
+void setup()
+{
+  pinMode(LED1, INPUT);
+  pinMode(LED2, INPUT);
+  pinMode(LED3, INPUT);
+  pinMode(BOTAO, OUTPUT);
+  Serial.begin(9600);  
+  
+  // inicia com o primeiro led aceso
+  acende_leds(1);
+}
+
+int x;
+bool apertou = false; // apertou botão?
+int led_atual = 1; // qual led está piscando?
+
+void liga_desliga(int led1, int led2, int led3) {
+  digitalWrite(LED1, led1);
+  digitalWrite(LED2, led2);
+  digitalWrite(LED3, led3);
+}
+void acende_leds(int led_piscando){
+  if (led_piscando == 1) liga_desliga(HIGH, LOW, LOW);
+  if (led_piscando == 2) liga_desliga(LOW, HIGH, LOW);
+  if (led_piscando == 3) liga_desliga(LOW, LOW, HIGH);    
+}
+
+void verifica_botao_apertado() {
+  // o botão foi apertado?
+  if (x == 1) {
+    // sinaliza que apertou
+    apertou = true;
+  } else {
+    // o botão está solto
+    // mas ele havia sido apertado antes?
+    if (apertou) {
+      // então agora o botão foi LIBERADO
+      // sinaliza que agora o botão foi solto
+      apertou = false;
+    }
+  }
+}
+
+void atualiza_leds() {
+  // o led está piscando?
+  if (apertou) {
+    // incrementa led atual
+  	led_atual = led_atual + 1;
+  	if (led_atual >= 4) { //passou do limite?
+	  // volta para o primeiro
+	  led_atual = 1;
+  	}
+    // ajusta os leds
+    acende_leds(led_atual);
+  }  
+}
+
+void loop()
+{
+  // FAZ A LEITURA DO BOTÃO
+  x = digitalRead(BOTAO);
+  Serial.print(x);
+  Serial.println(", ");
+  
+  verifica_botao_apertado();
+  atualiza_leds();
+   
+  delay(100);  
+}
