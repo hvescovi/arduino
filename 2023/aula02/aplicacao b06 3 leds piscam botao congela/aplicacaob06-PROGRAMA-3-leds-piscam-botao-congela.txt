@@ -5,10 +5,10 @@
 
 void setup()
 {
-  pinMode(LED1, INPUT);
-  pinMode(LED2, INPUT);
-  pinMode(LED3, INPUT);
-  pinMode(BOTAO, OUTPUT);
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(BOTAO, INPUT);
   Serial.begin(9600);  
 }
 
