@@ -47,15 +47,15 @@ void verifica_botao_apertado() {
 }
 
 void atualiza_leds() {
-  // o led está piscando?
+  // o botão está apertado?
   if (apertou) {
-    // incrementa led atual
+    // incrementa led atual e segue acendendo e apagando
   	led_atual = led_atual + 1;
   	if (led_atual >= 4) { //passou do limite?
-	  // volta para o primeiro
-	  led_atual = 1;
+	    // volta para o primeiro
+	    led_atual = 1;
   	}
-    // ajusta os leds
+    // ajusta os leds para acender conforme situação atual
     acende_leds(led_atual);
   }  
 }
