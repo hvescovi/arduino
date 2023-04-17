@@ -1,0 +1,21 @@
+void setup()
+{
+  // leitura do sensor de inclinação (tilt)
+  pinMode(2, INPUT);
+  Serial.begin(9600);
+}
+
+int x;
+void loop()
+{
+  // faz a leitura do sensor
+  x = digitalRead(2);
+  
+  // mostra a saída
+  Serial.print(x);
+  delay(1000); 
+  
+  // padrão neste circuito: mostra 1 quando o 
+  // sensor está de pé
+  // mostra zero quando deita o sensor
+}

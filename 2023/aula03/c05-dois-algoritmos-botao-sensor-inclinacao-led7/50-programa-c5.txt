@@ -1,0 +1,105 @@
+#define BOTAO 2
+#define INCLINA 3
+#define PA 13
+#define PB 12
+#define PC 11
+#define PD 10
+#define PE 9
+#define PF 8
+#define PG 7
+
+int x = 0; // variável para ser o número que vai aparecer
+int algoritmo = 1; // algoritmo 1 = incrementa, alg2 = decrementa
+bool apertou = false; // sinaliza que ainda não apertou o botão
+
+void setup()
+{
+  // todos os pinos do led são definidos como saída
+  pinMode(PA, OUTPUT);   pinMode(PB, OUTPUT);
+  pinMode(PC, OUTPUT);   pinMode(PD, OUTPUT);
+  pinMode(PE, OUTPUT);   pinMode(PF, OUTPUT);
+  pinMode(PG, OUTPUT);
+  
+  // pinos do botão de entrada e inclinação: entrada
+  pinMode(BOTAO, INPUT);
+  pinMode(INCLINA, INPUT);
+  
+  Serial.begin(9600);
+}
+
+// configura portas de A a G conforme informado nos parâmetros
+void c7(int a, int b, int c, int d, int e, int f, int g) {
+  digitalWrite(PA, a);   digitalWrite(PB, b);
+  digitalWrite(PC, c);   digitalWrite(PD, d);
+  digitalWrite(PE, e);   digitalWrite(PF, f);
+  digitalWrite(PG, g);
+}
+
+// função que liga os leds conforme o número
+void liga_numero(int n) {
+  if (n == 0) c7(1, 1, 1, 1, 1, 1, 0);
+  if (n == 1) c7(0, 1, 1, 0, 0, 0, 0);
+  if (n == 2) c7(1, 1, 0, 1, 1, 0, 1);
+  if (n == 3) c7(1, 1, 1, 1, 0, 0, 1);
+  if (n == 4) c7(0, 1, 1, 0, 0, 1, 1);
+  if (n == 5) c7(1, 0, 1, 1, 0, 1, 1);
+  if (n == 6) c7(1, 0, 1, 1, 1, 1, 1);
+  if (n == 7) c7(1, 1, 1, 0, 0, 0, 0);
+  if (n == 8) c7(1, 1, 1, 1, 1, 1, 1);
+  if (n == 9) c7(1, 1, 1, 1, 0, 1, 1);
+}
+  
+
+
+void loop()
+{
+  // mostra o que precisa no led
+  liga_numero(x);
+  
+  // espera geral
+  delay(1000);
+  
+  // faz a leitura do sensor
+  int sensor = digitalRead(INCLINA);
+  
+  Serial.print(" s:");
+  Serial.print(sensor);
+  
+  // sensor inclinado?
+  if (sensor == 0) {
+    
+    // algoritmo usado é para incrementar?
+    if (algoritmo == 1) {
+      if (x == 9) { // está no limite?
+        x = 0; // recomeça
+      } else {
+        x = x + 1; // incrementa
+      }
+    } else { // considera que o algoritmo é o 2...
+      if (x == 0) x = 9; else x = x - 1;
+    }
+  }
+  
+  // faz a leitura do botão
+  int botao = digitalRead(BOTAO);
+  
+  Serial.print(" b:");
+  Serial.print(botao);
+  
+  // botão foi clicado a primeira vez?
+  if (botao == 1 && (not apertou)) {
+    // sinaliza que apertou
+    apertou = true;
+  	// inverte o algoritmo
+    if (algoritmo == 1) algoritmo = 2; else algoritmo = 1;
+  }
+  
+  // se o botão está soltou mas havia sido apertado...
+  if (botao == 0 && apertou) {
+    // informa que o botão foi solto :-)
+    apertou = false;
+  }
+  
+  Serial.print(" x:");
+  Serial.println(x); 
+}
