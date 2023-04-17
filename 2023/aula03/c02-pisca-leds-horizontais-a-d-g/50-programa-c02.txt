@@ -1,0 +1,37 @@
+// definição das portas
+#define PA 13
+#define PB 12
+#define PC 11
+#define PD 10
+#define PE 9
+#define PF 8
+#define PG 7
+
+void setup()
+{
+  // todos os pinos do led são definidos como saída
+  pinMode(PA, OUTPUT);   pinMode(PB, OUTPUT);
+  pinMode(PC, OUTPUT);   pinMode(PD, OUTPUT);
+  pinMode(PE, OUTPUT);   pinMode(PF, OUTPUT);
+  pinMode(PG, OUTPUT);
+}
+
+// configura portas de A a G conforme informado nos parâmetros
+void c7(int a, int b, int c, int d, int e, int f, int g) {
+  digitalWrite(PA, a);   digitalWrite(PB, b);
+  digitalWrite(PC, c);   digitalWrite(PD, d);
+  digitalWrite(PE, e);   digitalWrite(PF, f);
+  digitalWrite(PG, g);
+}
+
+void loop()
+{
+  // ao chamar a função, os valores serão recebidos nos 
+  // parâmetros conforme a ordem. No caso abaixo:
+  // a = 1, b = 0, c = 0, d = 1, e = 0, f = 0, g = 1
+  c7(1, 0, 0, 1, 0, 0, 1);
+  
+  delay(400);
+  c7(0, 0, 0, 0, 0, 0, 0);
+  delay(400);
+}

@@ -1,0 +1,55 @@
+// definição das portas
+#define PA 13
+#define PB 12
+#define PC 11
+#define PD 10
+#define PE 9
+#define PF 8
+#define PG 7
+
+// variável para ser o número que vai aparecer
+int x = 0;
+
+void setup()
+{
+  // todos os pinos do led são definidos como saída
+  pinMode(PA, OUTPUT);   pinMode(PB, OUTPUT);
+  pinMode(PC, OUTPUT);   pinMode(PD, OUTPUT);
+  pinMode(PE, OUTPUT);   pinMode(PF, OUTPUT);
+  pinMode(PG, OUTPUT);
+}
+
+// configura portas de A a G conforme informado nos parâmetros
+void c7(int a, int b, int c, int d, int e, int f, int g) {
+  digitalWrite(PA, a);   digitalWrite(PB, b);
+  digitalWrite(PC, c);   digitalWrite(PD, d);
+  digitalWrite(PE, e);   digitalWrite(PF, f);
+  digitalWrite(PG, g);
+}
+
+// função que liga os leds conforme o número
+void liga_numero(int n) {
+  if (n == 0) c7(1, 1, 1, 1, 1, 1, 0);
+  if (n == 1) c7(0, 1, 1, 0, 0, 0, 0);
+  if (n == 2) c7(1, 1, 0, 1, 1, 0, 1);
+  if (n == 3) c7(1, 1, 1, 1, 0, 0, 1);
+  if (n == 4) c7(0, 1, 1, 0, 0, 1, 1);
+  if (n == 5) c7(1, 0, 1, 1, 0, 1, 1);
+  if (n == 6) c7(1, 0, 1, 1, 1, 1, 1);
+  if (n == 7) c7(1, 1, 1, 0, 0, 0, 0);
+  if (n == 8) c7(1, 1, 1, 1, 1, 1, 1);
+  if (n == 9) c7(1, 1, 1, 1, 0, 1, 1);
+}
+  
+void loop()
+{
+  // liga número atual
+  liga_numero(x);
+  delay(600);
+  
+  // avança contador de número
+  if (x == 9) 
+    x = 0;
+  else 
+    x += 1;
+}
