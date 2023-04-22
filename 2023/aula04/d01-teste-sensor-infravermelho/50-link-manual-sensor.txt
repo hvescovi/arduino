@@ -1,0 +1,6 @@
+https://sites.google.com/site/servidorvisualdicas/datasheets/Datasheet-tcrt5000.pdf?attredirects=0&d=1
+
+referência:
+https://www.squids.com.br/arduino/index.php/projetos-arduino/squids-projects/projetos-intermediarios/286-i01-sensor-optico-reflexivo-tcrt5000-como-interruptor-arduino
+
+
