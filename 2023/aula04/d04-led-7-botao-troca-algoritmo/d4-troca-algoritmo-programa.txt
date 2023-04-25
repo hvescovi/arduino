@@ -130,8 +130,6 @@ void verifica_botao_apertado() {
       apertou = false; // então o botão foi LIBERADO, sinaliza que botão foi solto
     }
   }
-  
-  
 }
 
 void loop()
