@@ -1,0 +1,18 @@
+void setup()
+{
+  pinMode(5, INPUT);
+  pinMode(13, OUTPUT);
+}
+
+int x;
+
+void loop()
+{
+  x = digitalRead(5); // ler o valor do botão
+  if (x == 1) { // o botão está apertado?
+    digitalWrite(13, HIGH); // acende o led :-)
+    while (digitalRead(5) == 1); // trava enquanto o botão estiver apertado
+  } else {
+    digitalWrite(13, LOW); // botão desligado: apaga o led
+  }
+}
