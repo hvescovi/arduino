@@ -1,0 +1,142 @@
+#define PA 13
+#define PB 12
+#define PC 11
+#define PD 10
+#define PE 9
+#define PF 8
+#define PG 7
+#define BOTAO 4
+
+// referência do enum
+// https://playground.arduino.cc/Code/Enum/
+enum algoritmos {
+  numero,
+  minhoca,
+  completa
+};
+
+int algoritmo_atual = numero; // começa executando o algoritmo número
+
+int x = 0; // valor atual de um contador geral
+
+bool apertou = false; // o botão começa sem estar apertado :-)
+
+void setup()
+{
+  // todos os pinos do led são definidos como saída
+  pinMode(PA, OUTPUT);   pinMode(PB, OUTPUT);
+  pinMode(PC, OUTPUT);   pinMode(PD, OUTPUT);
+  pinMode(PE, OUTPUT);   pinMode(PF, OUTPUT);
+  pinMode(PG, OUTPUT);
+  
+  pinMode(BOTAO, INPUT); // botão é entrada :-)
+  
+  Serial.begin(9600);
+}
+
+void liga_minhoca(int n) {
+  if (n == 0) c7(1, 0, 0, 0, 0, 0, 0);
+  if (n == 1) c7(0, 1, 0, 0, 0, 0, 0);
+  if (n == 2) c7(0, 0, 0, 0, 0, 0, 1);
+  if (n == 3) c7(0, 0, 0, 0, 1, 0, 0);
+  if (n == 4) c7(0, 0, 0, 1, 0, 0, 0);
+  if (n == 5) c7(0, 0, 1, 0, 0, 0, 0);
+  if (n == 6) c7(0, 0, 0, 0, 0, 0, 1);
+  if (n == 7) c7(0, 0, 0, 0, 0, 1, 0);
+}
+
+void liga_numero(int n) {
+  if (n == 0) c7(1, 1, 1, 1, 1, 1, 0);
+  if (n == 1) c7(0, 1, 1, 0, 0, 0, 0);
+  if (n == 2) c7(1, 1, 0, 1, 1, 0, 1);
+  if (n == 3) c7(1, 1, 1, 1, 0, 0, 1);
+  if (n == 4) c7(0, 1, 1, 0, 0, 1, 1);
+  if (n == 5) c7(1, 0, 1, 1, 0, 1, 1);
+  if (n == 6) c7(1, 0, 1, 1, 1, 1, 1);
+  if (n == 7) c7(1, 1, 1, 0, 0, 0, 0);
+  if (n == 8) c7(1, 1, 1, 1, 1, 1, 1);
+  if (n == 9) c7(1, 1, 1, 1, 0, 1, 1);
+}
+
+void liga_completa(int n) {
+  if (n == 0)  c7(1, 0, 0, 0, 0, 0, 0);
+  if (n == 1)  c7(1, 1, 0, 0, 0, 1, 0);
+  if (n == 2)  c7(1, 1, 0, 0, 0, 1, 1);
+  if (n == 3)  c7(1, 1, 1, 0, 1, 1, 1);
+  if (n == 4)  c7(1, 1, 1, 1, 1, 1, 1);
+  if (n == 5)  c7(0, 1, 1, 1, 1, 1, 1);
+  if (n == 6)  c7(0, 0, 1, 1, 1, 0, 1);
+  if (n == 7)  c7(0, 0, 1, 1, 1, 0, 0);
+  if (n == 8)  c7(0, 0, 0, 1, 0, 0, 0);
+  if (n == 9)  c7(0, 0, 1, 1, 1, 0, 0);
+  if (n == 10) c7(0, 0, 1, 1, 1, 0, 1);
+  if (n == 11) c7(0, 1, 1, 1, 1, 1, 1);
+  if (n == 12) c7(1, 1, 1, 1, 1, 1, 1);
+  if (n == 13) c7(1, 1, 1, 0, 1, 1, 1);
+  if (n == 14) c7(1, 1, 0, 0, 0, 1, 1);
+  if (n == 15) c7(1, 1, 0, 0, 0, 1, 0);
+}
+
+// configura portas de A a G conforme informado nos parâmetros
+void c7(int a, int b, int c, int d, int e, int f, int g) {
+  digitalWrite(PA, a);   digitalWrite(PB, b);
+  digitalWrite(PC, c);   digitalWrite(PD, d);
+  digitalWrite(PE, e);   digitalWrite(PF, f);
+  digitalWrite(PG, g);
+}
+
+// referência do switch case:
+// https://www.arduino.cc/reference/en/language/structure/control-structure/switchcase/
+void faz_acao_conforme_algoritmo() {
+  int limite;
+  switch (algoritmo_atual) {
+    case numero:
+    	limite = 9;
+    	liga_numero(x);
+    	break;
+    case minhoca:
+        limite = 7;
+    	liga_minhoca(x);
+    	break;
+    case completa:
+        limite = 15;
+    	liga_completa(x);
+    	break;
+  }
+  if (x >= limite) { // é melhor usar maior ou igual para garantir eventual pulo
+    x = 0;
+  } else {
+    x = x + 1;
+  }
+}   
+
+void troca_algoritmo() {
+  algoritmo_atual++;
+  if (algoritmo_atual > completa) {
+    algoritmo_atual = numero;
+  }
+  Serial.print("algoritmo: ");
+  Serial.println(algoritmo_atual);
+}
+
+void verifica_botao_apertado() {
+  int bt = digitalRead(BOTAO); // ler o valor do botão  
+  Serial.println(bt);
+  if (bt == 1 && (not apertou)) { // o botão foi apertado e estava solto?
+    apertou = true; // sinaliza que apertou!!
+    troca_algoritmo(); // troca o algoritmo!!
+  } else { 
+    if (bt == 0 && apertou) { // o botão está solto mas ele havia sido apertado antes?
+      apertou = false; // então o botão foi LIBERADO, sinaliza que botão foi solto
+    }
+  }
+  
+  
+}
+
+void loop()
+{
+  faz_acao_conforme_algoritmo();
+  delay(400);
+  verifica_botao_apertado();
+}
